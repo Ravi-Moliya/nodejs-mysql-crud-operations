@@ -1,0 +1,182 @@
+<html>
+    <head>
+        <title>Member Records</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"type="text/css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+        <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+
+        <script src="./MemberRecord.js" type="text/javascript"></script>
+        <script src="./PagerManage.js" type="text/javascript"></script>
+        <style type="text/css">
+            i.fa-sort{color:teal;font-size:18px;margin-right:20px;}
+            i.fa-sort:hover,i.fa-edit:hover,#ClearAllLink{cursor: pointer;}
+            small{color:red;font-weight:bold;}
+
+            #ManagePager li a:hover{cursor:pointer;}
+           #ManagePager li a{font-size:18px;}
+           #DDL_PageCounter{padding:0px;}
+
+           table tr th,table tr td{text-align:center;}
+            .right{top:0;
+            right:0;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+                <center><u><h1><b><i class="fa f-2x fa-users"></i> Member Records</b></h1></u></center>
+                <i class='fa fa-trash right'id="ALLDELETE" style='color:red; font-size:40px;'></i>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <hr/>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <div class="form-group">
+                            <span>Country</span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" id="SCOUNTRYBTN" name="SCOUNTRYBTN"class="form-control" placeholder="Enter Country..." maxlength="20"/>
+                            </div>
+                            <small id = "SCOUNTRYVALIDATEBTN"></small>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <span>State</span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                <input type="text" id="SSTATEBTN" name="SSTATEBTN"class="form-control" placeholder="Enter State..." maxlength="20"/>
+                            </div>
+                            <small id = "SSTATEVALIDATEBTN"></small>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <span>City</span>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input type="text" id="SCITYBTN"class="form-control" name="SCITYBTN" placeholder="Enter City..." maxlength="10"/>
+                            </div>
+                            <small id = "SCITYVALIDATEBTN"></small>
+                    </div><br/>
+                                        
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <center><input type="button" id="SEARCHBYALL" name="SEARCHBYALL" class="btn btn-primary" value = "SearchByAll"/></center>  
+                    </div>
+                    <br/><br/><br/><hr/>
+                    
+                    <table class="table table-hover table-striped tabler-border ">
+                        <thead>
+                            <tr>
+                                <td>NO.</td>
+                                <td>_ID</td>
+                                <td>FNAME</td>
+                                <td>EMAILID</td>
+                                <td>CONTACTNO</td>
+                                <td><i class="fa fa-sort" id="SORTBYCOUNTRY"></i>Country</td>
+                                <td><i class="fa fa-sort" id="SORTBYSTATE"></i>State</td>
+                                <td><i class="fa fa-sort" id="SORTBYCITY"></i>City</td>
+                                <td>Status</td>
+                                <td>EDIT</td>
+                                <td>DELETE</td>
+                            </tr>
+                        </thead>
+                        <tbody id = "tablebody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        <div class = "row">
+            <div class="col-lg-offset-3 col-lg-3 col-md-3 col-sm-4 col-xs-12">
+                <span style="color:teal ;font-weight : bold ;font-size:18px ">Record</span>
+                
+                <select id = "DDL_pagecounter" class="form-control">
+                    <option value="100">-All Records-</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="6">6</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-offset-3 col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                <ul class="pagination" id="managepager">
+                    <li class="page-item" data-indexid = "-1"><a class="page-link"><i class = "fa fa-angle-double-left"></i>Previous</a></li>
+                    <li class="page-item active" data-indexid = "1"><a class="page-link">1</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="EditUserRecord" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" style="font-size: 35px;" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title" style="color:black ;font-weight : bold  "><i class="fa fa-edit"></i> Update Record</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="color:teal ;font-weight : bold ;font-size:15px ">Country:</label>
+                    <div class="input-group">
+                      <select name="country" class="countries form-control" id="countryId">
+                        <option value="">Select Country</option>
+                    </select>
+                    </div>
+                    <small id="countryIdValidate"></small>
+                </div>
+                <div class="form-group">
+                    <label style="color:teal ;font-weight : bold ;font-size:15px ">State:</label>
+                    <div class="input-group">
+                      <select name="state" class="states form-control" id="stateId">
+                        <option value="">Select State</option>
+                    </select>
+                    </div>
+                    <small id="stateIdValidate"></small>
+                </div>
+                <div class="form-group">
+                    <label style="color:teal ;font-weight : bold ;font-size:15px ">City:</label>
+                    <div class="input-group">
+                      <select name="city" class="cities form-control" id="cityId">
+                        <option value="">Select City</option>
+                    </select>
+                    </div>
+                    <small id="cityIdValidate"></small>
+                </div>
+                <div class="row">
+                <div class="col-lg-6 col-md-6 form-group">
+                    <span style="color:teal ;font-weight : bold ;font-size:15px ">Status</span>
+                    <select id = "Status" class="form-control">
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="col-lg-6 col-md-6 form-group">
+                    <span style="color:teal ;font-weight : bold ;font-size:15px ">Admin-Type</span>
+                    <select id = "AdminType" class="form-control">
+                        <option value="Admin">Admin</option>
+                        <option value="Subadmin">Subadmin</option>
+                    </select>
+                </div>  
+                </div>                   
+            </div>
+            
+            <div class="modal-footer">
+                <input type="button" id = "btnupdate" value= "Update" class="btn btn-primary"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    </body>
+</html>
