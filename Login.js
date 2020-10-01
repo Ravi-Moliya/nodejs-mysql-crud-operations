@@ -82,7 +82,7 @@ $(document).ready(function(){
         }
         else
         {
-            alert("incorrect.....");
+            alert("Invalid EmailId or Password...!!!");
         }
     });
 });
@@ -91,25 +91,25 @@ const LoginData = (TxtUserName,TxtPassword)=>{
     
     $.ajax({
         url:'/Login_Api',
-        type:'post',
-        dataTye:"JSON",
+        type:'POST',
+        dataType:"JSON",
         cached:false,
         data:{TxtUserName:TxtUserName,TxtPassword:TxtPassword},
         success:(data)=>{
             console.log(data);
            
             if(data == "Email"){
-                alert("Incorrect Email Id...");
+                alert("Incorrect EmailId or Password...");
             }
             else if(data == "Password"){
-                alert("Incorrect Password...");
+                alert("Incorrect EmailId or Password...");
             }
             else{
-                window.location.replace(`http://localhost:3000/UserProfile?user=${data}`);
+                window.location.replace(`http://localhost:3000/UserProfile`);
             }
         },
         failure:()=>{
-            
+            alert("Sorry for Inconviency...!!!");
         }
     });
     return true;
